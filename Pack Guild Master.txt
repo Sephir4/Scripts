@@ -7,11 +7,11 @@
  |               |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|              |
  |                                                                         |
  |                             brAthena © 2013                             |
- |		          Desenvolvimento: Sephira e AdrianoBarbosa                |
+ |                Desenvolvimento: Sephira e AdrianoBarbosa                |
  |                            Pack Guild Master                            |
  \_________________________________________________________________________/
 */
-prontera,153,181,5	script	Pack Guild Master	100,{
+prontera,153,181,5	script	Pack Guild Master	56,{
 	mes .n$;
 	mes "Olá, "+strcharinfo(0)+" bem vind"+(sex?"o":"a")+" ao "+.rag_name$+", todas as guild's do "+.rag_name$+" tem direito a um serviço gratuito de ajuda para novas guild's.";
 	next;
