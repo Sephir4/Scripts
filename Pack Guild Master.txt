@@ -24,20 +24,25 @@ prontera,153,181,5	script	Pack Guild Master	56,{
 		case 1:
 			query_sql "SELECT `guild_id` FROM `pack_guild` WHERE `guild_id` = "+getcharid(2),@id_guild;
 			if(@id_guild != getcharid(2)){
-				query_sql "SELECT COUNT(*) FROM `char` WHERE `online` = 1 AND `guild_id` = "+getcharid(2), @guild_membros;
-				if(@guild_membros >= .min_membros){
+				query_sql "SELECT `account_id` FROM `char` WHERE `online` = 1 AND `guild_id` = "+getcharid(2), .@guild_membros;
+				if(getarraysize(.@guild_membros) >= .min_membros){
 					mes "A guild ira receber suprimentos referentes a quantidade de jogador membros da guild online, deseja receber o Pack Guild agora ?";
-					mes "^0000FFMembros online: ^000000"+@guild_membros;
+					mes "^0000FFMembros online: ^000000"+getarraysize(.@guild_membros);
 					if(select("Sim desejo receber:Irei aguardar")==1){
 						next;
 						mes .n$;
 						mes "Foram depositos no storage de sua guild seu Pack Guild, bom jogo.";
-						query_sql "INSERT INTO `pack_guild` (`ID`, `guild_id`, `membros`) VALUES (NULL, '"+getcharid(2)+"', '"+@guild_membros+"')";
-						for(set @i, 0; @i < getarraysize(.id_pg); set @i, @i+1){
-							query_sql "INSERT INTO `storage` (`id`, `account_id`, `nameid`, `amount`, `identify`, `card0`, `card2`, `card3`, `bound`) VALUES (NULL, '"+getcharid(3)+"', '"+.id_pg[@i]+"', '1', '"+(.qn_pg[@i]*@guild_membros)+"', '254', '3392', '3', '2')";
+						close2;
+						query_sql "INSERT INTO `pack_guild` (`ID`, `guild_id`, `membros`) VALUES (NULL, '"+getcharid(2)+"', '"+getarraysize(.@guild_membros)+"')";
+						for(set .@c, 0; .@c < getarraysize(.@guild_membros);set .@c,.@c+1){
+							if(attachrid(.@guild_membros[.@c])){
+								for(set .@i, 0; .@i < getarraysize(.id_pg); set .@i, .@i+1){
+									query_sql "INSERT INTO `storage` (`id`, `account_id`, `nameid`, `amount`, `identify`, `card0`, `card2`, `card3`, `bound`) VALUES (NULL, '"+.@guild_membros[.@c]+"', '"+.id_pg[.@i]+"', '1', '"+(.qn_pg[.@i]*.@guild_membros)+"', '254', '3392', '3', '2')";
+								}
+								dispbottom "[AVISO] Sua guild acaba de receber o Pack Guild, seus itens se encontram no storage, relogue para comfirmação do Pack Guild.";
+							}
 						}
-						dispbottom "[AVISO] Os itens adquiridos atraves do Pack Guild se encontram no storage.";
-						close;
+						end;
 					}
 					next;
 					mes .n$;
@@ -75,7 +80,7 @@ prontera,153,181,5	script	Pack Guild Master	56,{
 OnInit:
 	set .n$, "[^F50049Pack Guild Master^000000]";
 	set .rag_name$, "PerfectRO";
-	set .min_membros, 10;                      /* Quantidade minima de membros da guild online para receber o Pack Guild.*/
+	set .min_membros, 1;                      /* Quantidade minima de membros da guild online para receber o Pack Guild.*/
 	/* A quantidade de itens entregue
 	no pack e calculada atraves do
 	numero de membros da guild online.
@@ -83,6 +88,8 @@ OnInit:
 	setarray .id_pg[0], 501,502;               /* ID dos itens dados no Pack Guild.*/
 	setarray .qn_pg[0], 1,1;                   /* Quantidade de itens dados no Pack Guild.*/
 end;
+
+}
 
 /* Para o perfeito funcionando insira a seguinte query em seu banco de dados:
 
