@@ -31,15 +31,19 @@ prontera,153,181,5	script	Pack Guild Master	56,{
 					if(select("Sim desejo receber:Irei aguardar")==1){
 						next;
 						mes .n$;
-						mes "Foram depositos no storage de sua guild seu Pack Guild, bom jogo.";
+						mes "Os itens serão entregue a cada membro da guild online nessse momento.";
 						close2;
 						query_sql "INSERT INTO `pack_guild` (`ID`, `guild_id`, `membros`) VALUES (NULL, '"+getcharid(2)+"', '"+getarraysize(.@guild_membros)+"')";
 						for(set .@c, 0; .@c < getarraysize(.@guild_membros);set .@c,.@c+1){
 							if(attachrid(.@guild_membros[.@c])){
-								for(set .@i, 0; .@i < getarraysize(.id_pg); set .@i, .@i+1){
-									query_sql "INSERT INTO `storage` (`id`, `account_id`, `nameid`, `amount`, `identify`, `card0`, `card2`, `card3`, `bound`) VALUES (NULL, '"+.@guild_membros[.@c]+"', '"+.id_pg[.@i]+"', '1', '"+(.qn_pg[.@i]*.@guild_membros)+"', '254', '3392', '3', '2')";
+								query_sql "SELECT `account_id` FROM `pack_list` WHERE `account_id` = '"+.@guild_membros[.@c]+"'",@pack_acc;
+								if(@pack_acc != .@guild_membros[.@c]){
+									for(set .@i, 0; .@i < getarraysize(.id_pg); set .@i, .@i+1){
+										query_sql "INSERT INTO `storage` (`id`, `account_id`, `nameid`, `amount`, `identify`, `card0`, `card2`, `card3`, `bound`) VALUES (NULL, '"+.@guild_membros[.@c]+"', '"+.id_pg[.@i]+"', '1', '"+(.qn_pg[.@i]*.@guild_membros)+"', '254', '3392', '3', '2')";
+									}
+									query_sql "INSERT INTO `pack_list` (`ID`, `account_id`, `guild_id`) VALUES (NULL, '"+.@guild_membros[.@c]+"', '"+getcharid(2)+"')";
+									dispbottom "[AVISO] Sua guild acaba de receber o Pack Guild, seus itens se encontram no storage, relogue para comfirmação do Pack Guild.";
 								}
-								dispbottom "[AVISO] Sua guild acaba de receber o Pack Guild, seus itens se encontram no storage, relogue para comfirmação do Pack Guild.";
 							}
 						}
 						end;
@@ -97,6 +101,13 @@ CREATE TABLE IF NOT EXISTS `pack_guild` (
   `ID` int(10) unsigned NOT NULL auto_increment,
   `guild_id` int(10) NOT NULL,
   `membros` int(10) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `pack_list` (
+  `ID` int(10) unsigned NOT NULL auto_increment,
+  `account_id` int(10) NOT NULL,
+  `guild_id` int(10) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
