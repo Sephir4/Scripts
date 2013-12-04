@@ -1,0 +1,24 @@
+/*_________________________________________________________________________
+ /                                                                         \
+ |                  _           _   _   _                                  |
+ |               | |__  _ __ / \ | |_| |__   ___ _ __   __ _               |
+ |               | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |              |
+ |               | |_) | | / ___ \ |_| | | |  __/ | | | (_| |              |
+ |               |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|              |
+ |                                                                         |
+ |                             brAthena © 2013                             |
+ |                Desenvolvimento: Sephira e AdrianoBarbosa                |
+ |                            Função CountStorage                          |
+ \_________________________________________________________________________/
+*/
+function	script	CountStorage	{
+	query_sql "SELECT COUNT(*) FROM `login` WHERE `account_id` = '"+getarg(0)+"'",@va;
+	if(@va){
+		query_sql "SELECT COUNT(*) FROM `item_db` WHERE `id` = '"+getarg(1)+"'",@vi;
+		if(@vi){
+			query_sql "SELECT COUNT(*) FROM `storage` WHERE `account_id` = '"+getarg(0)+"' AND `nameid` = '"+getarg(1)+"'",@qnt;
+			return @qnt;
+		}
+	}
+	return 0;
+}
