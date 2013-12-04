@@ -12,16 +12,16 @@
  \_________________________________________________________________________/
 */
 function	script	StorageItem	{
-	if(getarg(2) > 0){
+	if(getarg(2) > 0 && getarg(2) < 999){
 		query_sql "SELECT COUNT(*) FROM `login` WHERE `account_id` = '"+getarg(0)+"'",@vl;
 		if(@vl){
 			query_sql "SELECT COUNT(*) FROM `item_db` WHERE `id` = '"+getarg(1)+"'",@vi;
 			if(@vi){
 				query_sql "INSERT INTO `storage` (`account_id`,`nameid`,`amount`,`identify`) VALUES ("+getarg(0)+","+getarg(1)+","+getarg(1)+",1)";
-				dispbottom "Você acaba de receber "+getarg(2)+" "+getitemname(getarg(1));
+				dispbottom "Você acaba de receber "+getarg(2)+" "+getitemname(getarg(1))+" em seu storage, relogue para comfirmação.;
 				return;
 			}
-			dispbottom "[AVISO] StorageItem: Item não encontrada.";
+			dispbottom "[AVISO] StorageItem: Item não encontrado.";
 			return;
 		}
 		dispbottom "[AVISO] StorageItem: Conta não encontrada.";
