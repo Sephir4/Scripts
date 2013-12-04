@@ -18,7 +18,7 @@ prontera,153,181,5	script	Pack Guild Master	56,{
 	mes .n$;
 	if(getguildmaster(getcharid(2)) == strcharinfo(0)){
 		mes (sex?"O":"A")+" senhor"+(sex?"":"a")+" gostaria de obter informações sobre meus serviços ?";
-		switch(select("Receber meu Pack:Requisitos para receber o Pack:Oque é o Pack Guild:Voltarei depois")){
+		switch(select("Receber meu Pack:Informações sobre o Pack Guild:Lista de premios:Voltarei depois")){
 		next;
 		mes .n$;
 		case 1:
@@ -39,7 +39,7 @@ prontera,153,181,5	script	Pack Guild Master	56,{
 								query_sql "SELECT `account_id` FROM `pack_list` WHERE `account_id` = '"+.@guild_membros[.@c]+"'",@pack_acc;
 								if(@pack_acc != .@guild_membros[.@c]){
 									for(set .@i, 0; .@i < getarraysize(.id_pg); set .@i, .@i+1){
-										query_sql "INSERT INTO `storage` (`id`, `account_id`, `nameid`, `amount`, `identify`, `card0`, `card2`, `card3`, `bound`) VALUES (NULL, '"+.@guild_membros[.@c]+"', '"+.id_pg[.@i]+"', '1', '"+(.qn_pg[.@i]*.@guild_membros)+"', '254', '3392', '3', '2')";
+										query_sql "INSERT INTO `storage` (`id`, `account_id`, `nameid`, `amount`, `identify`, `card0`, `card2`, `card3`, `bound`) VALUES (NULL, '"+.@guild_membros[.@c]+"', '"+.id_pg[.@i]+"', '1', '"+(.qn_pg[.@i]*.@guild_membros)+"', '254', '3392', '3', '4')";
 									}
 									query_sql "INSERT INTO `pack_list` (`ID`, `account_id`, `guild_id`) VALUES (NULL, '"+.@guild_membros[.@c]+"', '"+getcharid(2)+"')";
 									dispbottom "[AVISO] Sua guild acaba de receber o Pack Guild, seus itens se encontram no storage, relogue para comfirmação do Pack Guild.";
@@ -65,12 +65,15 @@ prontera,153,181,5	script	Pack Guild Master	56,{
 			mes "Todos os premios ganhos pelo Pack Guild são vinculados a Guild, o item sera deletado caso algum jogador que nao seja da guild o equipe.";
 			next;
 			mes "Esses são os requisitos para receber o Pack guild, bom jogo.";
-			close;
-		case 3:
+			next;;
 			mes "O Pack Guild é uma forma de ajudar as Guild's a se tornarem estaveis no "+.rag_name$+" e ajudar seus membros.";
 			next;
 			mes .n$;
 			mes "Qual quer guild pode receber o Pack Guild e não ha restrições de level, é realmente uma forma de ajudar novas guild's no "+.rag_name$;
+			close;
+		case 3:
+			mes .n$;
+			for(set @i,0; @i < getarraysize(.id_pg); set @i,@i+1) mes .qn_pg[@i]+"x [^1f920b+".id_pg[@i]+"^000000]";
 			close;
 		case 4:
 			mes .n$;
