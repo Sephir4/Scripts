@@ -19,6 +19,7 @@ function	script	StorageItem	{
 			if(@vi){
 				query_sql "INSERT INTO `storage` (`account_id`,`nameid`,`amount`,`identify`) VALUES ("+getarg(0)+","+getarg(1)+","+getarg(1)+",1)";
 				dispbottom "Você acaba de receber "+getarg(2)+" "+getitemname(getarg(1));
+				return;
 			}
 			dispbottom "[AVISO] StorageItem: Item não encontrada.";
 			return;
