@@ -64,8 +64,7 @@ prontera,153,181,5	script	Pack Guild Master	56,{
 			mes .n$;
 			mes "Todos os premios ganhos pelo Pack Guild são vinculados a Guild, o item sera deletado caso algum jogador que nao seja da guild o equipe.";
 			next;
-			mes "Esses são os requisitos para receber o Pack guild, bom jogo.";
-			next;;
+			mes .n$;
 			mes "O Pack Guild é uma forma de ajudar as Guild's a se tornarem estaveis no "+.rag_name$+" e ajudar seus membros.";
 			next;
 			mes .n$;
@@ -73,7 +72,7 @@ prontera,153,181,5	script	Pack Guild Master	56,{
 			close;
 		case 3:
 			mes .n$;
-			for(set @i,0; @i < getarraysize(.id_pg); set @i,@i+1) mes .qn_pg[@i]+"x [^1f920b+".id_pg[@i]+"^000000]";
+			for(set @i,0; @i < getarraysize(.id_pg); set @i,@i+1) mes .qn_pg[@i]+"x [^1f920b"+getitemname(.id_pg[@i])+"^000000]";
 			close;
 		case 4:
 			mes .n$;
