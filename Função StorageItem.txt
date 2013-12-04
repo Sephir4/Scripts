@@ -14,7 +14,7 @@
 function	script	StorageItem	{
 	if(getarg(2) > 0){
 		query_sql "SELECT COUNT(*) FROM `login` WHERE `account_id` = '"+getarg(0)+"'",@vl;
-		if(@vl){
+		if(!@vl){
 			query_sql "INSERT INTO `storage` (`account_id`,`nameid`,`amount`,`identify`) VALUES ("+getarg(0)+","+getarg(1)+","+getarg(1)+",1)";
 			dispbottom "Você acaba de receber "+getarg(2)+" "+getitemname(getarg(1));
 		}
