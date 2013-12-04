@@ -11,16 +11,19 @@
  |                            Pack Guild Master                            |
  \_________________________________________________________________________/
 */
+function	script	nmes	{
+	next;
+	mes getarg(0);
+	return;
+}
 prontera,153,181,5	script	Pack Guild Master	56,{
 	mes .n$;
 	mes "Olá, "+strcharinfo(0)+" bem vind"+(sex?"o":"a")+" ao "+.rag_name$+", todas as guild's do "+.rag_name$+" tem direito a um serviço gratuito de ajuda para novas guild's.";
-	next;
-	mes .n$;
+	nmes(.n$);
 	if(getguildmaster(getcharid(2)) == strcharinfo(0)){
 		mes (sex?"O":"A")+" senhor"+(sex?"":"a")+" gostaria de obter informações sobre meus serviços ?";
 		switch(select("Receber meu Pack:Informações sobre o Pack Guild:Lista de premios:Voltarei depois")){
-		next;
-		mes .n$;
+		nmes(.n$);
 		case 1:
 			query_sql "SELECT `guild_id` FROM `pack_guild` WHERE `guild_id` = "+getcharid(2),@id_guild;
 			if(@id_guild != getcharid(2)){
@@ -29,8 +32,7 @@ prontera,153,181,5	script	Pack Guild Master	56,{
 					mes "A guild ira receber suprimentos referentes a quantidade de jogador membros da guild online, deseja receber o Pack Guild agora ?";
 					mes "^0000FFMembros online: ^000000"+getarraysize(.@guild_membros);
 					if(select("Sim desejo receber:Irei aguardar")==1){
-						next;
-						mes .n$;
+						nmes(.n$);
 						mes "Os itens serão entregue a cada membro da guild online nessse momento.";
 						close2;
 						query_sql "INSERT INTO `pack_guild` (`ID`, `guild_id`, `membros`) VALUES (NULL, '"+getcharid(2)+"', '"+getarraysize(.@guild_membros)+"')";
@@ -48,8 +50,7 @@ prontera,153,181,5	script	Pack Guild Master	56,{
 						}
 						end;
 					}
-					next;
-					mes .n$;
+					nmes(.n$);
 					mes "Tudo bem, assim que tiver tudo pronto me procure.";
 					close;
 				}
@@ -60,22 +61,17 @@ prontera,153,181,5	script	Pack Guild Master	56,{
 			close;
 		case 2:
 			mes "Após a criação da sua guild os processos para receber o Pack Guild é simples, em sua Guild devem haver "+.min_membros+" membros online.";
-			next;
-			mes .n$;
+			nmes(.n$);
 			mes "Todos os premios ganhos pelo Pack Guild são vinculados a Guild, o item sera deletado caso algum jogador que nao seja da guild o equipe.";
-			next;
-			mes .n$;
+			nmes(.n$);
 			mes "O Pack Guild é uma forma de ajudar as Guild's a se tornarem estaveis no "+.rag_name$+" e ajudar seus membros.";
-			next;
-			mes .n$;
+			nmes(.n$);
 			mes "Qual quer guild pode receber o Pack Guild e não ha restrições de level, é realmente uma forma de ajudar novas guild's no "+.rag_name$;
 			close;
 		case 3:
-			mes .n$;
 			for(set @i,0; @i < getarraysize(.id_pg); set @i,@i+1) mes .qn_pg[@i]+"x [^1f920b"+getitemname(.id_pg[@i])+"^000000]";
 			close;
 		case 4:
-			mes .n$;
 			mes "Tudo bem, estarei aguardando seu retorno, bom  jogo.";
 			close;
 		default:break;
