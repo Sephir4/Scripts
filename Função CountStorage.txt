@@ -16,7 +16,7 @@ function	script	CountStorage	{
 	if(@va){
 		query_sql "SELECT COUNT(*) FROM `item_db` WHERE `id` = '"+getarg(1)+"'",@vi;
 		if(@vi){
-			query_sql "SELECT `amount` FROM `storage` WHERE `account_id` = '"+getarg(0)+"' AND `nameid` = '"+getarg(1)+"'",@qnt;
+			query_sql "SELECT SUM(`amount`) FROM `storage` WHERE `account_id` = '"+getarg(0)+"' AND `nameid` = '"+getarg(1)+"'",@qnt;
 			return @qnt;
 		}
 	}
