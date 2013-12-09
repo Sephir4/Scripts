@@ -1,0 +1,51 @@
+/*_________________________________________________________________________
+ /                                                                         \
+ |                _           _   _   _                                    |
+ |               | |__  _ __ / \ | |_| |__   ___ _ __   __ _               |
+ |               | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |              |
+ |               | |_) | | / ___ \ |_| | | |  __/ | | | (_| |              |
+ |               |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|              |
+ |                                                                         |
+ |                             brAthena © 2013                             |
+ |                Desenvolvimento: Sephira e AdrianoBarbosa                |
+ |                            Battleground Shop                            |
+ \_________________________________________________________________________/
+*/
+prontera,151,183,5	script	Battleground Shop	100,{
+	callshop "ShopBG",1;
+	npcshopattach "ShopBG";
+	end;
+OnBuyItem:	
+	for(set @i,0; @i < getarraysize(.bg_item);set @i,@i+1){
+		if(@bought_nameid == .bg_item[@i]){
+			mes .n$;
+			mes " ";
+			if(.emb_bv[@i] > 0) mes .emb_bv[@i]+"x Emblema de bravura.";
+			if(.emb_vl[@i] > 0) mes .emb_vl[@i]+"x Emblema de valor.";
+			if(select("Trocar:Cancelar")==2)close;
+				mes " ";
+				if(countitem(7828) >= .emb_bv[@i]){
+					if(countitem(7829) >= .emb_vl[@i]){
+						mes "[^00FF00Troca bem sucedida^000000]";
+						getitem .bg_item[@i],1;
+						delitem 7828,.emb_bv[@i];
+						delitem 7829,.emb_vl[@i];
+						close;
+					}
+				}
+				mes "[^FF0000Você não tem emblemas suficientes^000000]";
+				close;
+		}
+	}
+end;
+OnInit:
+	set .n$,[^539dc5Battleground Shop^000000]";
+	npcshopdelitem "ShopBG", 503;
+	setarray .bg_item[0], 501,502;
+	setarray .emb_bv[0], 10,0;
+	setarray .emb_vl[0], 0,10;
+	for(set .x,0; .x < getarraysize(.bg_item); set .x,.x+1) npcshopadditem "ShopBG", .bg_item[.x],0;
+end;
+}
+
+-	shop	ShopBG	-1,503:500
