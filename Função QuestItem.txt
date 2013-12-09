@@ -16,10 +16,12 @@ function	script	QuestItem	{
 	mes " ";
 	for(set @i,1;@i < getargcount();set @i,@i+2){
 		if(countitem(getarg(@i)) < getarg(@i+1)){
-			return 0;
+			mes "[^FF0000Você não tem os itens necessarios para concluir a quest^000000]";
+			close;
 		}
 	}
 	for(set @i,1;@i < getargcount();set @i,@i+2) delitem getarg(@i),getarg(@i+1);
 	getitem getarg(0),1;
-	return 1;
+	mes "[^0000FFVocê conclui a quest^000000]";
+	close;
 }
