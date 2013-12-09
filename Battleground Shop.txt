@@ -20,16 +20,16 @@ OnBuyItem:
 		if(@bought_nameid == .bg_item[@i]){
 			mes .n$;
 			mes " ";
-			if(.emb_bv[@i] > 0) mes .emb_bv[@i]+"x Emblema de bravura.";
-			if(.emb_vl[@i] > 0) mes .emb_vl[@i]+"x Emblema de valor.";
+			if(.emb_bv[@i] > 0) mes (.emb_bv[@i]*@bought_quantity)+"x Emblema de bravura.";
+			if(.emb_vl[@i] > 0) mes (.emb_vl[@i]*@bought_quantity)+"x Emblema de valor.";
 			if(select("Trocar:Cancelar")==2)close;
 				mes " ";
-				if(countitem(7828) >= .emb_bv[@i]){
-					if(countitem(7829) >= .emb_vl[@i]){
+				if(countitem(7828) >= (.emb_bv[@i]*@bought_quantity)){
+					if(countitem(7829) >= (.emb_vl[@i]*@bought_quantity)){
 						mes "[^00FF00Troca bem sucedida^000000]";
 						getitem .bg_item[@i],1;
-						delitem 7828,.emb_bv[@i];
-						delitem 7829,.emb_vl[@i];
+						delitem 7828,(.emb_bv[@i]*@bought_quantity);
+						delitem 7829,(.emb_vl[@i]*@bought_quantity);
 						close;
 					}
 				}
@@ -39,11 +39,11 @@ OnBuyItem:
 	}
 end;
 OnInit:
-	set .n$,[^539dc5Battleground Shop^000000]";
+	set .n$,"[^539dc5Battleground Shop^000000]";
 	npcshopdelitem "ShopBG", 503;
-	setarray .bg_item[0], 501,502;
-	setarray .emb_bv[0], 10,0;
-	setarray .emb_vl[0], 0,10;
+	setarray .bg_item[0], 501,502;          /* Id do item vendido no Battleground Shop */
+	setarray .emb_bv[0], 10,0;              /* Quantidade de emblemas de Bravura necessarios na troca */
+	setarray .emb_vl[0], 0,10;              /* Quantidade de emblemas de Valor necessarios na troca */
 	for(set .x,0; .x < getarraysize(.bg_item); set .x,.x+1) npcshopadditem "ShopBG", .bg_item[.x],0;
 end;
 }
