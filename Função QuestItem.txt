@@ -8,17 +8,18 @@
  |                                                                         |
  |                             brAthena © 2013                             |
  |                Desenvolvimento: Sephira e AdrianoBarbosa                |
- |                            Função CountStorage                          |
+ |                            Função QuestItem                             |
  \_________________________________________________________________________/
 */
-function	script	CountStorage	{
-	query_sql "SELECT COUNT(*) FROM `login` WHERE `account_id` = '"+getarg(0)+"'",@va;
-	if(@va){
-		query_sql "SELECT COUNT(*) FROM `item_db` WHERE `id` = '"+getarg(1)+"'",@vi;
-		if(@vi){
-			query_sql "SELECT SUM(`amount`) FROM `storage` WHERE `account_id` = '"+getarg(0)+"' AND `nameid` = '"+getarg(1)+"'",@qnt;
-			return @qnt;
+function	script	QuestItem	{
+	for(set @i,1;@i < getargcount();set @i,@i+2) mes getarg(@i+1)+"x "+getitemname(getarg(@i));
+	mes " ";
+	for(set @i,1;@i < getargcount();set @i,@i+2){
+		if(countitem(getarg(@i)) < getarg(@i+1)){
+			return 0;
 		}
 	}
-	return 0;
+	for(set @i,1;@i < getargcount();set @i,@i+2) delitem getarg(@i),getarg(@i+1);
+	getitem getarg(0),1;
+	return 1;
 }
