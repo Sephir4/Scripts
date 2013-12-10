@@ -27,7 +27,7 @@ OnBuyItem:
 				if(countitem(7828) >= (.emb_bv[@i]*@bought_quantity)){
 					if(countitem(7829) >= (.emb_vl[@i]*@bought_quantity)){
 						mes "[^00FF00Troca bem sucedida^000000]";
-						getitem .bg_item[@i],1;
+						getitem .bg_item[@i],@bought_quantity;
 						delitem 7828,(.emb_bv[@i]*@bought_quantity);
 						delitem 7829,(.emb_vl[@i]*@bought_quantity);
 						close;
