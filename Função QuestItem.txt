@@ -16,7 +16,7 @@ function	script	QuestItem	{
 	mes " ";
 	for(set @i,1;@i < getargcount();set @i,@i+2){
 		if(countitem(getarg(@i)) < getarg(@i+1)){
-			mes "[^FF0000Você não tem os itens necessarios para concluir a quest^000000]";
+			mes "[^FF0000Você ainda precisa de mais "+(getarg(@i+1)-countitem(getarg(@i)))+"x "+getitemname(getarg(@i))+"^000000]";
 			close;
 		}
 	}
