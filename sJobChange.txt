@@ -15,7 +15,7 @@
 function	script	sJobChange	{
 	jobchange getarg(0);
 	for(set @i,1;@i < getargcount();set @i,@i+2){
-		getitem getarg(1),getarg(2);
+		getitem getarg(@i),getarg(@i+1);
 	}
 	return;
 }
