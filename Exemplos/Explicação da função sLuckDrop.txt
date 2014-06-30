@@ -10,9 +10,9 @@
      | - Cria uma lista de premios que podem ser ganhos com   |
      | uma chance especifica.                                 |
      |--------------------------------------------------------|
-	 | sLuckDrop(<ID item>,<Quantidade>,<Chance>,{...});      |
+     | sLuckDrop(<ID item>,<Quantidade>,<Chance>,{...});      |
 	 |                                                        |
-	 | - Repita o processo para adicionar mais premios.       |
+     | - Repita o processo para adicionar mais premios.       |
      \________________________________________________________/*/
 	 
 function	script	sLuckDrop	{

@@ -1,0 +1,38 @@
+/*    ________________________________________________________
+     /                                                        \
+     |                        Sephir4                         |
+     |--------------------------------------------------------|
+     | Nome do Script: Função - sJobChange                    |
+     |--------------------------------------------------------|
+     | Criado por: Sephir4                                    |
+     |--------------------------------------------------------|
+     | Funcionalidades:                                       |
+     | - Transforma o jogador na classe especifica e ao mesmo |
+     | tempo da itens expecificos ao jogador.                 |
+     |--------------------------------------------------------|
+     | sJobChange(<ID Classe>,<ID item>,<Quantidade>,{ ... });|
+     \________________________________________________________/*/
+
+function	script	sJobChange	{
+	jobchange getarg(0);
+	for(set @i,1;@i < getargcount();set @i,@i+2){
+		getitem getarg(@i),getarg(@i+1);
+	}
+	return;
+}
+
+prontera,150,150,5	script	Lider Espadachim	100,{
+	mes "Olá, você quer se tornar um Espadachim e receber premios ?";
+	if(select("Sim:Não")==1){
+		if(Class != 1){
+			mes "Você recebera 100 Poções vermelhas e 100 Poções Amarelas após se tornar um Espadachim.";
+			close2;
+			sJobChange(1,500,100,503,100);
+			end;
+		}
+		mes "Você já é um Espadachim.";
+		close;
+	}
+	mes "Tudo bem.";
+	close;
+}
