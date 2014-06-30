@@ -1,16 +1,22 @@
-/*_________________________________________________________________________
- /                                                                         \
- |                _           _   _   _                                    |
- |               | |__  _ __ / \ | |_| |__   ___ _ __   __ _               |
- |               | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |              |
- |               | |_) | | / ___ \ |_| | | |  __/ | | | (_| |              |
- |               |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|              |
- |                                                                         |
- |                             brAthena © 2013                             |
- |                Desenvolvimento: Sephira e AdrianoBarbosa                |
- |                            Pack Guild Master                            |
- \_________________________________________________________________________/
-*/
+/*    ________________________________________________________
+     /                                                        \
+     |                        Sephir4                         |
+     |--------------------------------------------------------|
+     | Nome do Script: Pack Guild Master                      |
+     |--------------------------------------------------------|
+     | Criado por: Sephir4                                    |
+     |--------------------------------------------------------|
+     | Funcionalidades:                                       |
+     | - Adiciona o Pack Guild diretamente no inventario dos  |
+	 | membros do clã Online.                                 |
+     | - Remove os itens do PackGuild caso o jogador saia do  |
+	 | clã ou tente negociar o item.                          |
+	 |                                                        |
+	 | OBS: O script foi desenvolvido no emulador brAthena    |
+	 | não garanto a funcionalidade em outros emuladores.     |
+     |--------------------------------------------------------|
+     \________________________________________________________/*/
+	 
 function	script	nmes	{
 	next;
 	mes getarg(0);
