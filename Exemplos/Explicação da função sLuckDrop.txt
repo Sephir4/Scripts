@@ -1,0 +1,36 @@
+/*    ________________________________________________________
+     /                                                        \
+     |                        Sephir4                         |
+     |--------------------------------------------------------|
+     | Nome do Script: Função - sLuckDrop                     |
+     |--------------------------------------------------------|
+     | Criado por: Sephir4                                    |
+     |--------------------------------------------------------|
+     | Funcionalidades:                                       |
+     | - Cria uma lista de premios que podem ser ganhos com   |
+     | uma chance especifica.                                 |
+     |--------------------------------------------------------|
+	 | sLuckDrop(<ID item>,<Quantidade>,<Chance>,{...});      |
+	 |                                                        |
+	 | - Repita o processo para adicionar mais premios.       |
+     \________________________________________________________/*/
+	 
+function	script	sLuckDrop	{
+	for(set @i,0;@i < getargcount();set @i,@i+3){
+		set @rd, rand(1000);
+		if(getarg(@i+2) >= @rd){
+			getitem getarg(@i),getarg(@i+1);
+			return;
+		}
+	}
+	return;
+}
+
+-	script	MonstroDrop	-1,{
+OnNPCKillEvent:
+	switch(killedrid){
+		case 1001: sLuckDrop(13517,1,100); end;  /* Toda vez que o jogador matar um "Escorpião" ele tera 10.0% de chance de ganhar o item "Caixa de Fruto de Yggdrasil". */
+		case 1031: sLuckDrop(14522,10,500,14524,10,400); end; /* Toda vez que um jogador matar um "Poporing" ele tera 50% de ganhar 10 "Bolinho de arroz" e 40% de chance de ganhar 10 "Sashimi". */
+	}
+end;
+}
