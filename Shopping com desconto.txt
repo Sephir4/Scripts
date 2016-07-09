@@ -1,0 +1,62 @@
+/*    ________________________________________________________
+     /                                                        \
+     |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+     |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+     |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+     |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+	 |                                                        |
+     |--------------------------------------------------------|
+     | Nome do Script: Shoping com desconto                   |
+     |--------------------------------------------------------|
+     | Criado por: Sephir4                                    |
+     |--------------------------------------------------------|
+     \________________________________________________________/*/
+
+prontera,158,180,5	script	Shopping	100,{
+	callshop "Shop01",1;
+	npcshopattach "Shop01";
+	end;
+OnBuyItem:	
+	for(set @i,0; @i < getarraysize(.item);set @i,@i+1){
+		if(@bought_nameid == .item[@i]){
+			mes .n$;
+			set @val, @bought_quantity*.custo[@i];
+			mes "Valor sem desconto: ["+@val+"] Cash.";
+			if(getgmlevel() > 1)set @calc, $desconto*(@val/100); else set @calc, @val;
+			mes "Valor com desconto: ["+(@val-@calc)+"] Cash.";
+			mes "Desconto:                ["+$desconto+"%]";
+			mes " ";
+			if(#CASHPOINTS >= (@val-@calc)){
+				mes "[^00FF00Troca bem sucedida^000000]";
+				mes "";
+				mes @bought_quantity+"x - "+getitemname(@bought_nameid);
+				getitem .item[@i],@bought_quantity;
+				set #CASHPOINTS,#CASHPOINTS-(@val-@calc);
+				close;
+			}
+			mes "[^FF0000Cash insuficiente para comprar o item.^000000]";
+			close;
+		}
+	}
+	mes "[^FF0000Algo esta errado, entre em contato com a equipe de Administração.^000000]";
+	close;
+end;
+
+OnCalcDesconto:
+	set $desconto, .@atcmd_parameters$[0];
+	dispbottom "Todos os itens da loja terão um desconto de "+.@atcmd_parameters$[0]+"% para jogadores Vip.";
+end;
+
+OnInit:
+	set .n$,"                     [^539dc5Shopping^000000]";
+	npcshopdelitem "Shop01", 503;
+	set $desconto, 0;
+	unbindatcmd "desconto";
+	setarray .item[0], 501,502,505;
+	setarray .custo[0], 100,200,2000;
+	for(set .x,0; .x < getarraysize(.item); set .x,.x+1) npcshopadditem "Shop01", .item[.x],0;
+	bindatcmd("desconto","Shopping::OnCalcDesconto",99,99);
+end;
+}
+
+-	shop	Shop01	-1,503:500
