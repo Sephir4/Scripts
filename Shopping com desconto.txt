@@ -21,6 +21,9 @@ OnBuyItem:
 		if(@bought_nameid == .item[@i]){
 			mes .n$;
 			set @val, @bought_quantity*.custo[@i];
+			mes "-----------------------------------";
+			mes "  [^0000FF"+@bought_quantity*@quantidade+"^000000] - "+getitemname(@bought_nameid);
+			mes "-----------------------------------";
 			mes "Valor sem desconto: ["+@val+"] Cash.";
 			if(getgmlevel() > 1)set @calc, $desconto*(@val/100); else set @calc, @val;
 			mes "Valor com desconto: ["+(@val-@calc)+"] Cash.";
