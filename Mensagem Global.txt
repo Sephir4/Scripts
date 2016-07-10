@@ -11,7 +11,7 @@
      | Criado por: Sephir4                                    |
      |--------------------------------------------------------|
 	 | Funcionalidade:										  |
-	 | - Envia uma mensagem para todo o servidor atravez do   |
+	 | - Envia uma mensagem para todo o servidor através do   |
 	 | chat comum.											  |
      \________________________________________________________/*/
 
@@ -28,13 +28,14 @@
 			end;
 		}
 		dispbottom "Espere 30 Segundos para Enviar outra Mensagem Global.";
-		getitem 16266,1;
+		
+		getitem 501,1; // <- ID do item usado na mensagem Global
 		end;
 
 	}
 
 -	script	loadFunc	-1,{
 OnInit:
-	setitemscript 501,"{ msgGlobal(); }";
+	setitemscript 501,"{ msgGlobal(); }"; // <- ID do item usado na mensagem Global
 end;
 }
