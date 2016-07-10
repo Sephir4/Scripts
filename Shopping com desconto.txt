@@ -9,6 +9,10 @@
      | Nome do Script: Shoping com desconto                   |
      |--------------------------------------------------------|
      | Criado por: Sephir4                                    |
+	 |--------------------------------------------------------|
+	 | Funcionalidade:                                        |
+	 | - Cria um cash shop com desconto para jogadores vip.   |
+	 | - @desconto altera o valor do desconto.                |
      |--------------------------------------------------------|
      \________________________________________________________/*/
 
@@ -46,7 +50,7 @@ OnBuyItem:
 end;
 
 OnCalcDesconto:
-	set $desconto, .@atcmd_parameters$[0];
+	set $desconto, atoi(.@atcmd_parameters$[0]);
 	dispbottom "Todos os itens da loja terão um desconto de "+.@atcmd_parameters$[0]+"% para jogadores Vip.";
 end;
 
