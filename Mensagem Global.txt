@@ -1,0 +1,40 @@
+/*    ________________________________________________________
+     /                                                        \
+     |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+     |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+     |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+     |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+	 |                                                        |
+     |--------------------------------------------------------|
+     | Nome do Script: Mensagem Global                        |
+     |--------------------------------------------------------|
+     | Criado por: Sephir4                                    |
+     |--------------------------------------------------------|
+	 | Funcionalidade:										  |
+	 | - Envia uma mensagem para todo o servidor atravez do   |
+	 | chat comum.											  |
+     \________________________________________________________/*/
+
+-	script	Global	-1,{
+	end;
+}
+
+	function	script	msgGlobal	{
+
+		if(#delay < gettimetick(1)){
+			input @MSG$;
+			globalmes "["+strcharinfo(0)+"]: "+@MSG$,"Global";
+			set #delay, gettimetick(1) + 30;
+			end;
+		}
+		dispbottom "Espere 30 Segundos para Enviar outra Mensagem Global.";
+		getitem 16266,1;
+		end;
+
+	}
+
+-	script	loadFunc	-1,{
+OnInit:
+	setitemscript 501,"{ msgGlobal(); }";
+end;
+}
