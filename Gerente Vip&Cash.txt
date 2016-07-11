@@ -51,8 +51,8 @@ prontera,157,175,5	script	Gerente	833,{
 								mes "Foram adicionados [^0073a2"+.qv+"^000000] dias vip a conta [^0000FF"+@lac$+"^000000]";
 								query_sql "UPDATE `login` SET `dvip` = `dvip`+'"+.qv+"', `group_id` = '1' WHERE `account_id` = '"+@vfc+"'";
 								close2;
-								attachrid(@vfc);
 								if(isloggedin(@vfc)){
+									attachrid(@vfc);
 									dispbottom "Foram adicionados ["+.qv+"] dias vip em sua conta, relogue para evitar problemas.";
 								}
 								end;
@@ -79,7 +79,6 @@ prontera,157,175,5	script	Gerente	833,{
 								}
 								end;
 							}
-							nmes(.n$);
 							mes "A conta conta [^0000FF"+@lac$+"^000000] não tem dias vip suficientes para a remoção.";
 							if(select("- Tentar novamente:- Cancelar")==2)close;
 							
